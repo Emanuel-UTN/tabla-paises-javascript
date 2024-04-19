@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--
+      Need a visual blank slate?
+      Remove all code in `styles.css`!
+    -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h2>Articulos Familias</h2>
+    <hr />
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th style="width: 40%">IdArticuloFamilia</th>
+        <th style="width: 60%">Nombre</th>
+      </tr>
+
+      <tbody id="contenidoTabla"></tbody>
+    </table>
+  </body>
+  <br />
+  <button onclick="cargarGrilla()">Cargar Tabla</button>
+  
+
+  <script>
+    function cargarGrilla() {
+      //alert('cargando grilla desde codigo en html...');
+
+      fetch('https://labsys.frc.utn.edu.ar/dds-express/api/articulosfamilias')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          // Aquí puedes hacer cualquier manipulación o uso de los datos obtenidos
+          let contenido = "";
+          for(let i=0;i<data.length;i++)
+          {
+              contenido += ` <tr>
+           <td>${data[i].IdArticuloFamilia}</td>
+           <td>${data[i].Nombre}</td>
+         </tr>`
+
+          }
+
+          document.getElementById('contenidoTabla').innerHTML = contenido;
+
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+    }
+  </script>
+  <br><br>
+  <h2>Paises</h2>
+  <hr />
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th style="width: 40%">Nombre Pais</th>
+      <th style="width: 30%">Poblacion</th>
+      <th style="width: 30%">Moneda</th>
+    </tr>
+
+    <tbody id="tablaPaises"></tbody>
+  </table>
+  </body>
+  <br />
+  <button onclick="cargarTablaPaises()">Cargar Paises</button>
+
+  <script src="script.js"></script>
+</html>
